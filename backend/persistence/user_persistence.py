@@ -1,4 +1,5 @@
 # Funciones para manejar la conexión
+from backend.controllers.encrypters.password_encrypter import encrypt_password
 from backend.database.db_connection import get_db_connection
 
 def abrir_conexion():
@@ -19,9 +20,9 @@ def buscar_usuario_id(id_usuario):
                 usuarios.id, 
                 usuarios.mail, 
                 usuarios.nombre, 
-                rango.nombre AS rango 
+                rangos.nombre AS rangos 
             FROM usuarios
-            INNER JOIN rango ON usuarios.id_rango = rango.id
+            INNER JOIN rangos ON usuarios.rango = rangos.id
             WHERE usuarios.id = %s
         """, (id_usuario,))
         columnas = [col[0] for col in cursor.description]  # Nombres de las columnas
@@ -42,7 +43,7 @@ def editar_usuario(id_usuario, nuevo_nombre, nuevo_rango):
     cursor, connection = abrir_conexion()
     try:
         cursor.execute(
-            "UPDATE usuarios SET nombre = %s, id_rango = %s WHERE id = %s",
+            "UPDATE usuarios SET nombre = %s, rango = %s WHERE id = %s",
             (nuevo_nombre, nuevo_rango, id_usuario)
         )
         connection.commit()
@@ -50,11 +51,12 @@ def editar_usuario(id_usuario, nuevo_nombre, nuevo_rango):
         cerrar_conexion(cursor, connection)
 
 def agregar_usuario(mail,nombre, password, id_rango):
+    hashed_password = encrypt_password(password)
     cursor, connection = abrir_conexion()
     try:
         cursor.execute(
-            "INSERT INTO usuarios (mail,nombre, pass, id_rango) VALUES (%s,%s, %s, %s)",
-            (mail, nombre, password, id_rango)
+            "INSERT INTO usuarios (mail,nombre, pass, rango) VALUES (%s,%s, %s, %s)",
+            (mail, nombre, hashed_password, id_rango)
         )
         connection.commit()
     finally:
@@ -91,9 +93,9 @@ def buscar_usuarios_filtro(nombre, rango, id):
                 usuarios.id, 
                 usuarios.mail, 
                 usuarios.nombre, 
-                rango.nombre AS rango 
+                rangos.nombre AS rango 
             FROM usuarios
-            INNER JOIN rango ON usuarios.id_rango = rango.id
+            INNER JOIN rangos ON usuarios.rango = rangos.id
         """
         filters = []
         params = []
@@ -104,7 +106,7 @@ def buscar_usuarios_filtro(nombre, rango, id):
             params.append(nombre)
         
         if rango:
-            filters.append("rango.nombre = %s")
+            filters.append("rangos.nombre = %s")
             params.append(rango)
 
         if id:

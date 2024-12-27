@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from BackendWeb.persistence.company_persistence import (buscarEmpresa,actualizarEmpresa,)
+from backend.persistence.company_persistence import (buscarEmpresa,actualizarEmpresa,)
 
 company_bp = Blueprint('company_bp',__name__)
 

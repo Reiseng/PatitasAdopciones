@@ -1,5 +1,5 @@
-from BackendWeb.database.db_connection import get_db_connection
-from BackendWeb.model.entity.company_model import CompanyModel
+from backend.database.db_connection import get_db_connection
+from backend.model.entity.company_model import CompanyModel
 
 def abrir_conexion():
     connection = get_db_connection()
