@@ -1,5 +1,4 @@
 from flask import Blueprint, jsonify, request
-from backend.controllers.encrypters.password_encrypter import encrypt_password
 from backend.persistence.user_persistence import (
     buscar_usuario_id,
     eliminar_usuario,

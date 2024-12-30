@@ -1,4 +1,4 @@
-main {
+.main-login {
     flex: 1; /* Ocupa el espacio restante entre header y footer */
     display: flex;
     justify-content: center; /* Centra horizontalmente */
@@ -38,7 +38,7 @@ body {
         }
         .hero {
             text-align: center;
-            background: url('/FrontendWeb/img/placeholder.jpg') no-repeat center center/cover;
+            background: url('/static/img/placeholder.jpg') no-repeat center center/cover;
             color: #000;
             padding: 5rem 2rem;
         }
