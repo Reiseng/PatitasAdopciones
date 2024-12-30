@@ -20,7 +20,7 @@ def get_events():
     # Simulación de eventos desde una base de datos
     connection = get_db_connection()
     cursor = connection.cursor()
-    cursor.execute("SELECT id, nombre, fecha, descrpcion FROM eventos ORDER BY fecha ASC LIMIT 3")
+    cursor.execute("SELECT id, nombre, fecha, descripcion FROM eventos ORDER BY fecha ASC LIMIT 3")
     events = cursor.fetchall()
     cursor.close()
     connection.close()
