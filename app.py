@@ -25,6 +25,3 @@ def login():
 def panel():
     # Esta ruta solo es accesible si el usuario está loggeado
     return render_template('panel.html')
-
-if __name__ == '__main__':
-    app.run(debug=True, host='127.0.0.1', port=5000)
