@@ -1,15 +1,7 @@
 # Funciones para manejar la conexión
 from backend.controllers.encrypters.password_encrypter import encrypt_password
 from backend.database.db_connection import get_db_connection
-
-def abrir_conexion():
-    connection = get_db_connection()
-    cursor = connection.cursor()
-    return cursor, connection
-
-def cerrar_conexion(cursor, connection):
-    cursor.close()
-    connection.close()
+from backend.database.db_connection import abrir_conexion,cerrar_conexion
 
 def buscar_usuario_id(id_usuario):
     cursor, connection = abrir_conexion()
@@ -55,7 +47,7 @@ def agregar_usuario(mail,nombre, password, id_rango):
     cursor, connection = abrir_conexion()
     try:
         cursor.execute(
-            "INSERT INTO usuarios (mail,nombre, pass, rango) VALUES (%s,%s, %s, %s)",
+            "SELECT registrar_usuario(%s, %s, %s, %s);",
             (mail, nombre, hashed_password, id_rango)
         )
         connection.commit()
@@ -66,7 +58,7 @@ def editar_mi_usuario(id_usuario,nuevo_mail ,nuevo_nombre, nuevo_pass):
     cursor, connection = abrir_conexion()
     try:
         cursor.execute(
-            "UPDATE usuarios SET mail = %s, nombre = %s, pass = %s WHERE id = %s",
+            "SELECT actualizar_usuario(%s, %s, %s, %s);",
             (nuevo_mail, nuevo_nombre, nuevo_pass, id_usuario)
         )
         connection.commit()
@@ -74,11 +66,13 @@ def editar_mi_usuario(id_usuario,nuevo_mail ,nuevo_nombre, nuevo_pass):
         cerrar_conexion(cursor, connection)
 
 def editar_sin_password(id_usuario,nuevo_mail ,nuevo_nombre):
+    password = None
+    rango = None
     cursor, connection = abrir_conexion()
     try:
         cursor.execute(
-            "UPDATE usuarios SET mail = %s, nombre = %s WHERE id = %s",
-            (nuevo_mail, nuevo_nombre, id_usuario)
+            "SELECT actualizar_usuario(%s, %s, %s , %s, %s);",
+            (id_usuario, nuevo_nombre, nuevo_mail, password, rango)
         )
         connection.commit()
     finally:

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patitas Adopciones</title>  
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/panel.css') }}">
+
+</head>
+<body>
+
+    <header>
+        <h1>Patitas Adopciones</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Inicio</a></li>
+                <li><a href="{{ url_for('events_bp.events') }}">Eventos</a></li>
+                <li><a href="#nosotros">Sobre Nosotros</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+                <li><a href="{{ url_for('panel_bp.panel') }}">Panel</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <h1>Bienvenido al Panel de control</h1>
+        <p>Hola, {{ user.nombre }}. Tienes rango de {{ user.rangos }}.</p>
+
+        {% if user.rangos == 'Administrador' %}
+        <h2>Opciones de Administrador</h2>
+        <div class="admin-options">
+            <ul>
+                <li class="card"><a href="/panel/user">Administrar usuarios</a></li>
+                <li class="card"><a href="/panel/event">Administrar eventos</a></li>
+                <li class="card"><a href="/panel/profile">Administrar perfil</a></li>
+            </ul>
+        </div>
+        {% else %}
+        <div class="user-options">
+            <h2>Opciones de Usuario</h2>
+            <ul>
+                <li><a href="/mi-perfil">Ver Mi Perfil</a></li>
+                <li><a href="/eventos">Ver Eventos</a></li>
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+    <footer>
+        <p>&copy; 2024 Adopta un Amigo. Todos los derechos reservados. <a href="#">Política de privacidad</a></p>
+        <p>Síguenos en <a id="Facebook" href="#">Facebook</a> | <a id="Instagram" href="#">Instagram</a> | <a id="Twitter" href="#">Twitter</a></p>
+    </footer>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script src="{{ url_for('static', filename='js/login.js') }}"></script>
+</body>
+</html>

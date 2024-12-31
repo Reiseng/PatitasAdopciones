@@ -1,9 +1,7 @@
 const userp = document.getElementById("username");
 const passwordp = document.getElementById("password");
 const tokenp = document.getElementById("tokenp"); // Elemento donde mostrarás el token
-const facebook = document.getElementById("Facebook");
 
-facebook.href = "https://www.facebook.com"
 
 function login(event) {
     // Evita el comportamiento predeterminado del formulario
@@ -35,5 +33,17 @@ function login(event) {
         localStorage.setItem('authToken', data.token);
     })
     .catch(error => {
-    });
-}
+    })
+};
+const togglePassword = document.getElementById('togglePassword');
+const passwordField = document.getElementById('password');
+const passwordIcon = document.getElementById('passwordIcon');
+
+togglePassword.addEventListener('click', () => {
+    // Cambia el tipo del campo entre 'password' y 'text'
+    const isPassword = passwordField.type === 'password';
+    passwordField.type = isPassword ? 'text' : 'password';
+
+    // Cambia la imagen
+    passwordIcon.src = isPassword ? '/static/img/cerrar-ojo.png' : '/static/img/ojo.png';
+});

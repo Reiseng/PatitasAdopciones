@@ -27,16 +27,19 @@
             <form action="/auth" method="POST">
                 <label for="username">Usuario</label>
                 <input type="text" id="username" name="mail" placeholder="Ingresa tu usuario" required>
-            
+    
                 <label for="password">Contraseña</label>
-                <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" required>
-            
+                <div class="password-container">
+                    <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" required>
+                    <button type="button" id="togglePassword" class="toggle-password">
+                        <img id="passwordIcon" src="/static/img/ojo.png" alt="Mostrar contraseña">
+                    </button>
+                </div>
+    
                 <button type="submit">Ingresar</button>
             </form>
-            
         </div>
-        
-</main>
+    </main>
     <footer>
         <p>&copy; 2024 Adopta un Amigo. Todos los derechos reservados. <a href="#">Política de privacidad</a></p>
         <p>Síguenos en <a id="Facebook" href="#">Facebook</a> | <a id="Instagram" href="#">Instagram</a> | <a id="Twitter" href="#">Twitter</a></p>

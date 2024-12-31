@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patitas Adopciones</title>  
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/events.css') }}">
 
 </head>
 <body>
@@ -14,32 +13,33 @@
         <h1>Patitas Adopciones</h1>
         <nav>
             <ul>
-                <li><a href="{{ url_for('index') }}">Inicio</a></li>
+                <li><a href="#">Inicio</a></li>
                 <li><a href="{{ url_for('events_bp.events') }}">Eventos</a></li>
                 <li><a href="#nosotros">Sobre Nosotros</a></li>
                 <li><a href="#contacto">Contacto</a></li>
-                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('panel_bp.panel') }}">Panel</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
             </ul>
         </nav>
     </header>
     <main>
-        <section class = "event-container">
-            <h2 id ="event-tittle">{{ event[1] }}</h2>  <!-- Nombre del evento -->
-            <p id="event-date">Fecha: {{ event[2] }}</p>  <!-- Formato de la fecha -->
-            <p id="event-description">{{ event[3] | safe }}</p>  <!-- Descripción -->
-        </section>
-        <section class="section" id="eventos">
-            <h3>Otros eventos</h3>
-            <div class="cards" id="eventos-cards">
-                <!-- Aquí se inyectarán las tarjetas dinámicamente -->
-            </div>
-        </section>
-    </main>
+    <section class="hero">
+        <h2>Únete a nuestras actividades</h2>
+        <p>Descubre los eventos y actividades para ayudar a nuestros amigos de cuatro patas.</p>
+        <a href="{{ url_for('events_bp.events') }}">Ver eventos próximos</a>
+    </section>
+    
+    <section class="section" id="eventos">
+        <h3>Próximos eventos</h3>
+        <div class="cards" id="eventos-cards">
+            <!-- Aquí se inyectarán las tarjetas dinámicamente -->
+        </div>
+    </section>
     <footer>
         <p>&copy; 2024 Adopta un Amigo. Todos los derechos reservados. <a href="#">Política de privacidad</a></p>
-        <p>Síguenos en <a id="Facebook" href="#">Facebook</a> | <a href="#">Instagram</a> | <a href="#">Twitter</a></p>
+        <p>Síguenos en <a id="Facebook" href="#">Facebook</a>| <a href="#">Instagram</a> | <a href="#">Twitter</a></p>
     </footer>
-    
+</main>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <script src="{{ url_for('static', filename='js/load.js') }}"></script>
 </body>

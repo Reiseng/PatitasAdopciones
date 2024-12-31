@@ -26,6 +26,6 @@
             console.error(error);
         }
     }
-
+    
     // Llamar a la función cuando la página esté lista
     document.addEventListener('DOMContentLoaded', loadEvents);

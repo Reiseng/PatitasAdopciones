@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patitas Adopciones</title>  
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/panel.css') }}">
+
+</head>
+<body>
+
+    <header>
+        <h1>Patitas Adopciones</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Inicio</a></li>
+                <li><a href="{{ url_for('events_bp.events') }}">Eventos</a></li>
+                <li><a href="#nosotros">Sobre Nosotros</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+                <li><a href="{{ url_for('panel_bp.panel') }}">Panel</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <body>
+        <main class="main-profile">
+            <div class="profile-container">
+                <h2>Cambiar datos de usuario</h2>
+                <section>
+                    <p>Nombre actual: {{ user.nombre }}</p>
+                    <p>Correo actual: {{ user.mail }}</p>
+                    <p>Rango actual: {{ user.rangos}}</p>
+                </section>
+                <form id="edit-user-form" action="{{ url_for('user.edit_user', id_usuario=user.id) }}" method="POST">
+                    <input type="hidden" name="_method" value="PUT"> <!-- Simulación de PUT -->
+                    <input type="hidden" id="user-id" value="{{user.id}}">
+                    <p>Nombre: </p><input type="text" name="nombre" placeholder="Nuevo nombre">
+                    <p>E-Mail: </p><input type="email" name="mail" placeholder="Nuevo correo">
+                    <p>Password: </p> <input type="password" name="pass" placeholder="Nueva contraseña">
+                    <button type="submit">Guardar cambios</button>
+                </form>
+            </div>
+        </main>
+    </body>
+<footer>
+    <p>&copy; 2024 Adopta un Amigo. Todos los derechos reservados. <a href="#">Política de privacidad</a></p>
+    <p>Síguenos en <a id="Facebook" href="#">Facebook</a> | <a id="Instagram" href="#">Instagram</a> | <a id="Twitter" href="#">Twitter</a></p>
+</footer>
+<script src="{{ url_for('static', filename='js/validation.js') }}"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

@@ -13,3 +13,11 @@ def get_db_connection():
         database=os.getenv('DB_NAME'),
         port="5432"  # puerto por defecto
     )
+def abrir_conexion():
+    connection = get_db_connection()
+    cursor = connection.cursor()
+    return cursor, connection
+
+def cerrar_conexion(cursor, connection):
+    cursor.close()
+    connection.close()

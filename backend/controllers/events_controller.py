@@ -13,7 +13,10 @@ def events():
     events = cursor.fetchall()
     cursor.close()
     connection.close()
-    return render_template('events.html', events= events)
+    if request.cookies.get('access_token'):
+        return render_template('events_protected.html', events=events)
+    else:
+        return render_template('events.html', events= events)
 
 @events_bp.route('/')
 def get_events():
@@ -44,5 +47,7 @@ def event_detail_query():
     print(event)
     if not event:
         return "Evento no encontrado", 404
-    
-    return render_template('event_detail.html', event=event)
+    if request.cookies.get('access_token'):
+        return render_template('event_detail_protected.html', event=event)
+    else:
+        return render_template('event_detail.html', event=event)

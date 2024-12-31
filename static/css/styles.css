@@ -146,3 +146,46 @@ body {
     color: #ff6f61;
     text-decoration: none;
 }
+.password-container {
+    position: relative; /* Necesario para posicionar el botón dentro */
+    display: flex;
+    align-items: center;
+}
+#password {
+    width: 90%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.password-container input {
+    width: 100%;
+    padding-right: 40px; /* Espacio para el botón */
+    box-sizing: border-box;
+}
+
+.toggle-password {
+    position: absolute;
+    right: -10px; /* Ajusta la distancia al borde derecho */
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.8rem;
+    background:none;
+    transform: translateY(-20%);
+    height: 72%;
+}
+
+.toggle-password:hover {
+    background: none;
+}
+.toggle-password img {
+    width: 20px;
+    transform: translateY(-9%);
+    height: 20px;
+}
+
+.toggle-password:hover img {
+    opacity: 0.8; /* Efecto al pasar el cursor */
+}

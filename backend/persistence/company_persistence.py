@@ -1,14 +1,6 @@
 from backend.database.db_connection import get_db_connection
 from backend.model.entity.company_model import CompanyModel
-
-def abrir_conexion():
-    connection = get_db_connection()
-    cursor = connection.cursor()
-    return cursor, connection
-
-def cerrar_conexion(cursor, connection):
-    cursor.close()
-    connection.close()
+from backend.database.db_connection import abrir_conexion, cerrar_conexion
 
 def buscarEmpresa():
     cursor, connection = abrir_conexion()

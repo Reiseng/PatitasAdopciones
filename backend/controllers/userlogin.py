@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, make_response, redirect, request, url_for
 from backend.controllers.encrypters.password_encrypter import check_password
-from backend.database.db_connection import get_db_connection
+from backend.database.db_connection import abrir_conexion, cerrar_conexion, get_db_connection
 import jwt
 import datetime
 from dotenv import load_dotenv
@@ -45,7 +45,7 @@ def authenticate():
             token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
 
             # Crear la respuesta
-            response = make_response(redirect(url_for('protected')))  # Redirigir al usuario a la página protegida
+            response = make_response(redirect(url_for('panel_bp.panel')))  # Redirigir al usuario a la página protegida
 
             # Guardar el token en las cookies
             secure_cookie = os.getenv('FLASK_ENV') == 'production'
@@ -55,13 +55,6 @@ def authenticate():
             return jsonify({'message': 'Contraseña incorrecta'}), 401
     else:
         return jsonify({'message': 'Correo electrónico no registrado'}), 404
-
-
-@auth_bp.route('/logout', methods=['POST'])
-def logout():
-    response = jsonify({'message': 'Cierre de sesión exitoso'})
-    response.set_cookie('access_token', '', max_age=0)  # Eliminar la cookie
-    return response
 
 # Middleware para verificar el token
 def verificar_token(f):
@@ -81,3 +74,16 @@ def verificar_token(f):
             return response
         return f(*args, **kwargs)
     return decorator
+
+def verificar_password_actual(id_usuario, password_actual):
+    cursor, connection = abrir_conexion()
+    try:
+        cursor.execute("SELECT password FROM usuarios WHERE id = %s", (id_usuario,))
+        usuario = cursor.fetchone()
+        if not usuario:
+            return False
+        
+        password_encriptada = usuario[0]
+        return check_password(password_actual, password_encriptada)
+    finally:
+        cerrar_conexion(cursor, connection)
