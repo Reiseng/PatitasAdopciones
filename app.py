@@ -1,20 +1,18 @@
-from flask import Flask, jsonify, make_response, redirect, render_template, request, url_for
+from flask import Flask, make_response, redirect, render_template, request, url_for
 from flask_cors import CORS
-from backend.controllers.userlogin import auth_bp, verificar_token
-from backend.controllers.users_controller import users_bp
-from backend.controllers.company_controller import company_bp
-from backend.controllers.events_controller import events_bp, event_bp
-from backend.controllers.panel import panel_bp
+from controller.user_controller import user
+from controller.event_controller import event, events_templates
+from controller.panel_template_controller import panel
+from controller.userlogin import auth_bp, verificar_token
 
 app = Flask(__name__)
 CORS(app)
 
 app.register_blueprint(auth_bp, url_prefix='/auth')
-app.register_blueprint(users_bp, url_prefix='/user')
-app.register_blueprint(company_bp, url_prefix='/company')
-app.register_blueprint(events_bp, url_prefix='/events')
-app.register_blueprint(event_bp, url_prefix='/event')
-app.register_blueprint(panel_bp, url_prefix='/panel')
+app.register_blueprint(event, url_prefix='/api/event')
+app.register_blueprint(events_templates, url_prefix='/event')
+app.register_blueprint(user, url_prefix='/api/user')
+app.register_blueprint(panel, url_prefix='/panel')
 
 @app.route('/')
 def index():
@@ -28,7 +26,7 @@ def index():
 @app.route('/login')
 def login():
     if request.cookies.get('access_token'):
-        return redirect(url_for('panel_bp.panel'))
+        return redirect(url_for('panel_template.Panel'))
     return render_template('login.html')
 @app.route('/logout')
 def logout():
@@ -44,3 +42,6 @@ def override_method():
         if method in ['PUT', 'DELETE']:
             request.environ['REQUEST_METHOD'] = method
             print(f"Method overridden to: {method}")  # Ver el nuevo método
+            
+if __name__ == '__main__':
+    app.run(debug=True, host='127.0.0.1', port=5000)

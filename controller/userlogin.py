@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, make_response, redirect, request, url_for
-from backend.controllers.encrypters.password_encrypter import check_password
-from backend.database.db_connection import abrir_conexion, cerrar_conexion, get_db_connection
+from controller.encrypters.password_encrypter import check_password
+from database.db_connection import abrir_conexion, cerrar_conexion, get_db_connection
 import jwt
 import datetime
 from dotenv import load_dotenv
@@ -26,26 +26,24 @@ def authenticate():
         password = request.form.get('password')
 
     # Validar usuario en la base de datos
-    connection = get_db_connection()
-    cursor = connection.cursor()
-    cursor.execute("SELECT id, pass, rango FROM usuarios WHERE mail = %s", (mail,))
-    usuario = cursor.fetchone()
-    cursor.close()
-    connection.close()
+    cursor, connection = abrir_conexion()
+    cursor.execute("SELECT id, password, rank FROM users WHERE email = %s", (mail,))
+    user = cursor.fetchone()
+    cerrar_conexion(cursor, connection)
 
-    if usuario:
-        stored_hashed_password = usuario[1]
+    if user:
+        stored_hashed_password = user[1]
         if check_password(password, stored_hashed_password):
             # Crear token
             payload = {
-                'id': usuario[0],  # ID del usuario
-                'rango': usuario[2],  # Rango del usuario
+                'id': user[0],  # ID del usuario
+                'rank': user[2],  # Rango del usuario
                 'exp': datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=2)
             }
             token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
 
             # Crear la respuesta
-            response = make_response(redirect(url_for('panel_bp.panel')))  # Redirigir al usuario a la página protegida
+            response = make_response(redirect(url_for('panel_template.Panel')))
 
             # Guardar el token en las cookies
             secure_cookie = os.getenv('FLASK_ENV') == 'production'
@@ -67,7 +65,7 @@ def verificar_token(f):
         try:
             # Decodificar el token
             decoded_token = jwt.decode(token, SECRET_KEY, algorithms="HS256")
-            request.usuario = decoded_token  # Añadir los datos del token al request
+            request.user = decoded_token  # Añadir los datos del token al request
         except jwt.ExpiredSignatureError:
             return response
         except jwt.InvalidTokenError:
@@ -75,15 +73,15 @@ def verificar_token(f):
         return f(*args, **kwargs)
     return decorator
 
-def verificar_password_actual(id_usuario, password_actual):
+def verificar_password_actual(id_user, password_actual):
     cursor, connection = abrir_conexion()
     try:
-        cursor.execute("SELECT password FROM usuarios WHERE id = %s", (id_usuario,))
-        usuario = cursor.fetchone()
-        if not usuario:
+        cursor.execute("SELECT password FROM usuarios WHERE id = %s", (id_user,))
+        user = cursor.fetchone()
+        if not user:
             return False
         
-        password_encriptada = usuario[0]
+        password_encriptada = user[0]
         return check_password(password_actual, password_encriptada)
     finally:
         cerrar_conexion(cursor, connection)

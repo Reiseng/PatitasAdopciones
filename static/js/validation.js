@@ -15,12 +15,16 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log('Formulario enviado');
             const formData = new FormData(event.target);
             const data = {};
-            formData.forEach((value, key) => data[key] = value);
+            formData.forEach((value, key) => {
+                if (value.trim() !== '' && key !== '_method') {  // Excluir el campo _method
+                    data[key] = value;
+                }
+            });
 
             const userId = document.getElementById('user-id').value;  // Obtener el ID del usuario
             console.log('User ID:', userId);
 
-            fetch('/user/' + userId, {
+            fetch('/api/user/' + userId, {
                 method: 'PUT',  // Enviar como PUT
                 headers: {
                     'Content-Type': 'application/json',

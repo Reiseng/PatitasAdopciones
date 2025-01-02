@@ -14,7 +14,7 @@
         <nav>
             <ul>
                 <li><a href="{{ url_for('index') }}">Inicio</a></li>
-                <li><a href="#">Eventos</a></li>
+                <li><a href="{{ url_for('events_templates.events') }}">Eventos</a></li>
                 <li><a href="#nosotros">Sobre Nosotros</a></li>
                 <li><a href="#contacto">Contacto</a></li>
                 <li><a href="{{ url_for('login') }}">Login</a></li>
@@ -23,10 +23,10 @@
     </header>
     <main>
         {% for event in events %}
-        <h4>{{ event[1] }}</h4>  <!-- Nombre del evento -->
-        <p>Fecha: {{ event[2] }}</p>  <!-- Formato de la fecha -->
-        <p>Descripción: {{ event[3] }}</p>  <!-- Descripción -->
-        <a href="/event?id={{ event[0] }}">Ver más</a>  <!-- Enlace al evento -->
+        <h4>{{ event.name }}</h4>  <!-- Nombre del evento -->
+        <p>Fecha: {{ event.date }}</p>  <!-- Formato de la fecha -->
+        <p>Descripción: {{ event.description }}</p>  <!-- Descripción -->
+        <a href="/event?id={{ event.id }}">Ver más</a>  <!-- Enlace al evento -->
         {% endfor %}
         
     </main>

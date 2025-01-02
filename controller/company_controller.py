@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
-from backend.persistence.company_persistence import (buscarEmpresa,actualizarEmpresa,)
+from persistence.company_persistence import (buscarEmpresa,actualizarEmpresa)
 
-company_bp = Blueprint('company_bp',__name__)
+company_bp = Blueprint('company',__name__)
 
 @company_bp.route('/', methods=['GET'])
 def get_empresa():

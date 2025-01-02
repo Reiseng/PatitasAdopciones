@@ -14,7 +14,7 @@
         <nav>
             <ul>
                 <li><a href="#">Inicio</a></li>
-                <li><a href="{{ url_for('events_bp.events') }}">Eventos</a></li>
+                <li><a href="{{ url_for('events_templates.events') }}">Eventos</a></li>
                 <li><a href="#nosotros">Sobre Nosotros</a></li>
                 <li><a href="#contacto">Contacto</a></li>
                 <li><a href="{{ url_for('login') }}">Login</a></li>
@@ -25,7 +25,7 @@
     <section class="hero">
         <h2>Únete a nuestras actividades</h2>
         <p>Descubre los eventos y actividades para ayudar a nuestros amigos de cuatro patas.</p>
-        <a href="{{ url_for('events_bp.events') }}">Ver eventos próximos</a>
+        <a href="{{ url_for('events_templates.events') }}">Ver eventos próximos</a>
     </section>
     
     <section class="section" id="eventos">
