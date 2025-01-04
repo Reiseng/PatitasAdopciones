@@ -32,7 +32,8 @@
         <section class = "event-container">
             <h2 id ="event-tittle">{{ event.name }}</h2>  <!-- Nombre del evento -->
             <p id="event-date">Fecha: {{ event.date }}</p>  <!-- Formato de la fecha -->
-            <p id="event-description">{{ event.description | safe }}</p>  <!-- Descripción -->
+            <p id="event-description">{{ event.description }}</p>  <!-- Descripción -->
+            <p id="event-content">{{ event.content | safe }}</p>  <!-- Contenido -->
         </section>
         <section class="section" id="eventos">
             <h3>Otros eventos</h3>
