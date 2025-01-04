@@ -22,16 +22,7 @@ body {
     padding-top: 60px; /* Asegúrate de que haya espacio suficiente */
     margin: 0;  /* Elimina márgenes */
 }
-footer{
-    position:relative;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: #5E6472;
-    color: #fff;
-    text-align: center;
-    padding: 1rem 0;
-}
+
 header h1 {
     margin: 0;
     font-size: 1.5rem;

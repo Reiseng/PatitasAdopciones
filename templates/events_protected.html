@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Patitas Adopciones</title>  
+    <title>Patitas Adopciones</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/events.css') }}">
 </head>
 <body>
     <header>
@@ -29,13 +30,16 @@
         </nav>
     </header>
     <main>
-        {% for event in events %}
-        <h4>{{ event.name }}</h4>  <!-- Nombre del evento -->
-        <p>Fecha: {{ event.date }}</p>  <!-- Formato de la fecha -->
-        <p>Descripción: {{ event.description }}</p>  <!-- Descripción -->
-        <a href="/event?id={{ event.id }}">Ver más</a>  <!-- Enlace al evento -->
-        {% endfor %}
-        
+        <div class="cards">
+            {% for event in events %}
+            <div class="event-card">
+                <h4>{{ event.name }}</h4>  <!-- Nombre del evento -->
+                <p id="event-date">Fecha: {{ event.date }}</p>  <!-- Formato de la fecha -->
+                <p>Descripción: {{ event.description }}</p>  <!-- Descripción -->
+                <a href="/event/detail?id={{ event.id }}">Ver más</a>  <!-- Enlace al evento -->
+            </div>
+            {% endfor %}
+        </div>
     </main>
     <footer>
         <p>&copy; 2024 Adopta un Amigo. Todos los derechos reservados. <a href="#">Política de privacidad</a></p>
