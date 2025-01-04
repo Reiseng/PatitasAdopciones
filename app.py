@@ -23,11 +23,13 @@ def index():
     else:
         # Si no está loggeado, mostrar la opción de login
         return render_template('index.html')  # Este template es para usuarios no loggeados
+    
 @app.route('/login')
 def login():
     if request.cookies.get('access_token'):
         return redirect(url_for('panel_template.Panel'))
     return render_template('login.html')
+
 @app.route('/logout')
 def logout():
     response = make_response(redirect(url_for('login')))
@@ -42,6 +44,15 @@ def override_method():
         if method in ['PUT', 'DELETE']:
             request.environ['REQUEST_METHOD'] = method
             print(f"Method overridden to: {method}")  # Ver el nuevo método
+@app.route('/nosotros')
+def nosotros():
+    return render_template('nosotros.html')
+@app.route('/donations')
+def donations():
+    return render_template('donations.html')
+@app.route('/contact') 
+def contact():
+    return render_template('contact.html')
             
 if __name__ == '__main__':
     app.run(debug=True, host='127.0.0.1', port=5000)

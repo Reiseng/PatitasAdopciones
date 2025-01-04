@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patitas Adopciones</title>  
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -28,29 +27,28 @@
             </ul>
         </nav>
     </header>     
-    <main class="main-login">
-        <div class="login-container">
-            <h2>Iniciar Sesión</h2>
-            <form action="/auth" method="POST">
-                <label for="username">Usuario</label>
-                <input type="text" id="username" name="mail" placeholder="Ingresa tu usuario" required>
-    
-                <label for="password">Contraseña</label>
-                <div class="password-container">
-                    <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" required>
-                    <button type="button" id="togglePassword" class="toggle-password">
-                        <img id="passwordIcon" src="/static/img/ojo.png" alt="Mostrar contraseña">
-                    </button>
-                </div>
-                <label class="error-message" id="error-message" style="display: none;">Usuario o contraseña incorrectos</label>
-                <button type="submit">Ingresar</button>
-            </form>
+    <main>
+        <h1 color="red">PAGINA DE DATOS SOBRE NOSOTROS</h1>
+        <h2 color="red">DATOS POR RELLENAR</h2>
+    <section class="section" id="eventos">
+        <h3>Quiza te interese</h3>
+        <div class="cards" id="eventos-cards">
+            <!-- Aquí se inyectarán las tarjetas dinámicamente -->
         </div>
-    </main>
+    </section>
+    <!--
+    <section class="section" id="login">
+        <h3>Login</h3>
+        <p>Accede a tu cuenta para gestionar eventos y usuarios.</p>
+        <a href="{{ url_for('login') }}">Iniciar sesión</a>
+    </section>
+     -->
     <footer>
         <p>&copy; 2024 Adopta un Amigo. Todos los derechos reservados. <a href="#">Política de privacidad</a></p>
-        <p>Síguenos en <a id="Facebook" href="#">Facebook</a> | <a id="Instagram" href="#">Instagram</a> | <a id="Twitter" href="#">Twitter</a></p>
+        <p>Síguenos en <a id="Facebook" href="#">Facebook</a>| <a href="#">Instagram</a> | <a href="#">Twitter</a></p>
     </footer>
-<script src="{{ url_for('static', filename='js/main.js') }}"></script>
-<script src="{{ url_for('static', filename='js/login.js') }}"></script>
+</main>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/load.js') }}"></script>
 </body>
+</html>

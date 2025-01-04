@@ -1,9 +1,9 @@
-from persistence.userDao import InMemoryUserRepository
+from persistence.userDao import UserPersistence
 
 class UserService:
     def __init__(self, user_repository=None):
         # Usa el repositorio proporcionado o crea uno nuevo por defecto
-        self.user_repository = user_repository or InMemoryUserRepository()
+        self.user_repository = user_repository or UserPersistence()
 
     def create_user(self, name, email, password, rank):
         # Lógica de negocio para crear un usuario, como validaciones

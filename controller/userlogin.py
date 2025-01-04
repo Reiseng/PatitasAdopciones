@@ -21,7 +21,7 @@ def authenticate():
         data = request.json
         mail = data.get('mail')
         password = data.get('password')
-    else:  # Si el contenido es form-data (desde el formulario)
+    else:  # Si el contenido es form-data
         mail = request.form.get('mail')
         password = request.form.get('password')
 
@@ -36,23 +36,21 @@ def authenticate():
         if check_password(password, stored_hashed_password):
             # Crear token
             payload = {
-                'id': user[0],  # ID del usuario
-                'rank': user[2],  # Rango del usuario
-                'exp': datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=2)
+                'id': user[0],
+                'rank': user[2],
+                'exp': datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=2),
             }
             token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
-
-            # Crear la respuesta
-            response = make_response(redirect(url_for('panel_template.Panel')))
-
-            # Guardar el token en las cookies
+            # Respuesta con token y estado de éxito
+            response = make_response(jsonify({'message': 'Autenticación exitosa', 'token': token, }), 200)
             secure_cookie = os.getenv('FLASK_ENV') == 'production'
             response.set_cookie('access_token', token, httponly=True, secure=secure_cookie, samesite='Strict', max_age=7200)
             return response
         else:
-            return jsonify({'message': 'Contraseña incorrecta'}), 401
+            return jsonify({'message': 'Usuario o contraseña incorrecta'}), 401
     else:
         return jsonify({'message': 'Correo electrónico no registrado'}), 404
+
 
 # Middleware para verificar el token
 def verificar_token(f):
@@ -76,11 +74,10 @@ def verificar_token(f):
 def verificar_password_actual(id_user, password_actual):
     cursor, connection = abrir_conexion()
     try:
-        cursor.execute("SELECT password FROM usuarios WHERE id = %s", (id_user,))
+        cursor.execute("SELECT password FROM users WHERE id = %s", (id_user,))
         user = cursor.fetchone()
         if not user:
             return False
-        
         password_encriptada = user[0]
         return check_password(password_actual, password_encriptada)
     finally:

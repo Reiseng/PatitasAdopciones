@@ -1,40 +1,41 @@
-const userp = document.getElementById("username");
-const passwordp = document.getElementById("password");
-const tokenp = document.getElementById("tokenp"); // Elemento donde mostrarás el token
+document.addEventListener('DOMContentLoaded', function () {
+    const loginForm = document.querySelector('form');
+    const errorMessage = document.getElementById('error-message');
 
+    if (loginForm) {
+        loginForm.addEventListener('submit', async function (event) {
+            event.preventDefault();
 
-function login(event) {
-    // Evita el comportamiento predeterminado del formulario
-    event.preventDefault();
+            const formData = new FormData(loginForm);
+            const data = Object.fromEntries(formData.entries()); // Convierte formData en objeto
 
-    const loginUrl = 'http://127.0.0.1:5000/auth/';
+            try {
+                const response = await fetch('/auth', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                });
 
-    // Obtén los valores de los inputs
-    const credentials = {
-        mail: userp.value,
-        password: passwordp.value
-    };
+                if (response.ok) {
+                    const responseData = await response.json();
+                    console.log('Login exitoso:', responseData.message);
+                    window.location.href = '/panel'; // Redirige a la página deseada
+                } else {
+                    const errorData = await response.json();
+                    errorMessage.textContent = errorData.message || 'Error desconocido';
+                    errorMessage.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Error en la solicitud:', error);
+                errorMessage.textContent = 'Error inesperado. Por favor, inténtalo de nuevo.';
+                errorMessage.style.display = 'block';
+            }
+        });
+    }
+});
 
-    fetch(loginUrl, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(credentials),
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then(data => {
-        // Guarda el token en localStorage
-        localStorage.setItem('authToken', data.token);
-    })
-    .catch(error => {
-    })
-};
 const togglePassword = document.getElementById('togglePassword');
 const passwordField = document.getElementById('password');
 const passwordIcon = document.getElementById('passwordIcon');

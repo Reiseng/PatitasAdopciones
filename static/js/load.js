@@ -22,7 +22,7 @@ async function loadEvents() {
                 <h4>${event.name}</h4> <!-- Accediendo al nombre del evento -->
                 <p>Fecha: ${new Date(event.date).toLocaleDateString()}</p> <!-- Formateando la fecha -->
                 <p>Descripción: ${event.description}</p> <!-- Accediendo a la descripción -->
-                <a href="/event?id=${event.id}">Ver más</a> <!-- Accediendo al ID del evento -->
+                <a href="/event/detail?id=${event.id}">Ver más</a> <!-- Accediendo al ID del evento -->
             `;
             cardsContainer.appendChild(card);
         });

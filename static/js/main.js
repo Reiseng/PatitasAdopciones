@@ -1,32 +1,40 @@
-const facebook = document.getElementById("Facebook");
+document.addEventListener('DOMContentLoaded', function () {
+    // Mostrar/ocultar menú en pantallas pequeñas
+    const menuToggle = document.querySelector('.menu-toggle span');
+    const menu = document.querySelector('.menu');
 
-facebook.href = "https://www.facebook.com"
-
-function getCompany(){
-    const getUrl = 'http://127.0.0.1:5000/company/'
-    fetch(getUrl,{
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then(data => {
-        const company = data[0];
-         companyName = company.nombre;
-         companyMail = company.mail;
-         companyTel = company.telefono;
-         companyFacebook = company.facebook;
-         companyInstagram = company.instagram;
-         companyTwitter = company.twitter;
-
-    })
-    .catch(error => {
-        console.error('Error:', error);
+    menuToggle.addEventListener('click', function () {
+        menu.classList.toggle('open');
     });
-};
+
+    // Modo Oscuro
+    const toggleDarkMode = document.getElementById('DarkMode');
+    const modeIcon = document.getElementById('modeIcon');
+    toggleDarkMode.style.cursor = 'pointer';
+
+    // Verificar el modo guardado en localStorage y aplicar
+    if (localStorage.getItem('darkMode') === 'true') {
+        document.body.classList.add('dark-mode');
+        modeIcon.classList.remove('fa-sun');
+        modeIcon.classList.add('fa-moon');
+    } else {
+        document.body.classList.remove('dark-mode');
+        modeIcon.classList.remove('fa-moon');
+        modeIcon.classList.add('fa-sun');
+    }
+
+    toggleDarkMode.addEventListener('click', function () {
+        document.body.classList.toggle('dark-mode');
+        
+        // Cambiar el icono según el modo
+        if (document.body.classList.contains('dark-mode')) {
+            localStorage.setItem('darkMode', 'true');
+            modeIcon.classList.remove('fa-sun');
+            modeIcon.classList.add('fa-moon');
+        } else {
+            localStorage.setItem('darkMode', 'false');
+            modeIcon.classList.remove('fa-moon');
+            modeIcon.classList.add('fa-sun');
+        }
+    });
+});

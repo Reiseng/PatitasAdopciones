@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, render_template, request
 from controller.userlogin import verificar_token
 from controller.validator.event_validator import EventValidator
+from database.db_connection import get_db_connection
 from services.event_service import EventService
 
 event = Blueprint('event', __name__)
@@ -10,13 +11,13 @@ event_service = EventService()
 @event.route('', methods=['GET'])
 def get_events():
     events = event_service.get_all_events()
-    return jsonify([event.to_dict() for event in events])
+    return jsonify([event for event in event_service.get_all_events()])
 
 @event.route('/<int:event_id>', methods=['GET'])
 def get_event(event_id):
     try:
         event = event_service.get_event(event_id)
-        return jsonify(event.to_dict())
+        return jsonify(event)
     except ValueError as e:
         return jsonify({'message': str(e)}), 404
     
@@ -25,13 +26,13 @@ def create_event():
         data = request.get_json()
         name = data.get('name')
         date = data.get('date')
-        location = data.get('location')
         description = data.get('description')
+        content = data.get('content')
         try:
-            event_validator = EventValidator(name, date, location, description)
-            event_validator.validate()
-            event = event_service.create_event(name, date, location, description)
-            return jsonify(event.to_dict()), 201
+            event_validate = EventValidator(name, date, description)
+            event_validate.validate()
+            event = event_service.create_event(name, date, description, content)
+            return jsonify({'message': 'Event created successfully', 'Event': event}), 201
         except ValueError as e:
             return jsonify({'message': str(e)}), 400
         
@@ -40,11 +41,13 @@ def update_event(event_id):
     data = request.get_json()
     name = data.get('name')
     date = data.get('date')
-    location = data.get('location')
     description = data.get('description')
+    content = data.get('content')
     try:
-        event = event_service.update_event(event_id, name, date, location, description)
-        return jsonify(event.to_dict())
+        event_valudate = EventValidator(name, date, description)
+        event_valudate.validate()
+        event = event_service.update_event(event_id, name, date, description, content)
+        return jsonify({'message': 'Event updated successfully', 'Event': event})
     except ValueError as e:
         return jsonify({'message': str(e)}), 404
 
@@ -61,10 +64,28 @@ def delete_event(event_id):
 events_templates = Blueprint('events_templates',__name__)
 
 @events_templates.route('/')
-@verificar_token
 def events():
     events = event_service.get_all_events()
     if request.cookies.get('access_token'):
         return render_template('events_protected.html', events=events)
     else:
         return render_template('events.html', events= events)
+    
+@events_templates.route('/detail')
+def event_detail_query():
+    # Obtener el parámetro `id` de la query string
+    event_id = request.args.get('id', type=int)
+
+    if not event_id:
+        return "ID del evento no proporcionado", 400
+
+    # Consultar los datos del evento
+    event = event_service.get_event(event_id)
+    if not event:
+        return "Evento no encontrado", 404
+
+    # Determinar la plantilla según si hay un token en las cookies
+    if request.cookies.get('access_token'):
+        return render_template('event_detail_protected.html', event=event)
+    else:
+        return render_template('event_detail.html', event=event)

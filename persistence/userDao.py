@@ -2,7 +2,7 @@ import uuid
 from controller.encrypters.password_encrypter import encrypt_password
 from database.db_connection import abrir_conexion, cerrar_conexion
 
-class InMemoryUserRepository:
+class UserPersistence:
     def __init__(self):
         pass
 
@@ -18,8 +18,10 @@ class InMemoryUserRepository:
             connection.commit()
             cursor.execute("SELECT * FROM users WHERE id = %s", (user_id,))
             added_user = cursor.fetchone()
-            return added_user  # Retornar el usuario actualizado
-
+            columns = [col[0] for col in cursor.description]  # Obtener nombres de columnas
+            if added_user:
+                return dict(zip(columns, added_user ))  # Crear un diccionario con los datos del usuario
+            return None  # Si no se encuentra el usuario
         except Exception as e:
             connection.rollback()
             raise e
@@ -30,10 +32,10 @@ class InMemoryUserRepository:
         cursor, connection = abrir_conexion()
         try:
             cursor.execute("SELECT * FROM users WHERE id = %s", (user_id,))
-            columnas = [col[0] for col in cursor.description]  # Obtener nombres de columnas
+            columns = [col[0] for col in cursor.description]  # Obtener nombres de columnas
             user = cursor.fetchone()  # Obtener una sola fila
             if user:
-                return dict(zip(columnas, user))  # Crear un diccionario con los datos del usuario
+                return dict(zip(columns, user))  # Crear un diccionario con los datos del usuario
             return None  # Si no se encuentra el usuario
         except Exception as e:
             connection.rollback()
