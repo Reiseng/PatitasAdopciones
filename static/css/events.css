@@ -1,3 +1,11 @@
+main{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    flex-direction: column;
+}
 .event-container {
     display: flex;
     flex-direction: column;
@@ -35,13 +43,7 @@
     max-width: 400px;
     margin: 1rem; /* Agrega un pequeño margen para evitar que toque los bordes */
 }
-main{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-}
+
 .event-card a {
     text-decoration: none;
     color: #333;
