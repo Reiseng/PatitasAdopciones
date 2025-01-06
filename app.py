@@ -69,3 +69,8 @@ def override_method():
         if method in ['PUT', 'DELETE']:
             request.environ['REQUEST_METHOD'] = method
             print(f"Method overridden to: {method}")  # Ver el nuevo método
+
+
+__name__ = '__main__'
+if __name__ == '__main__':
+    app.run(debug=True)
