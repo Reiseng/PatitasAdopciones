@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, render_template, request
-from controller.userlogin import verificar_token
+from controller.userlogin import verificar_token, verificar_token_directo
 from controller.validator.event_validator import EventValidator
 from database.db_connection import get_db_connection
 from services.event_service import EventService
@@ -66,8 +66,10 @@ events_templates = Blueprint('events_templates',__name__)
 @events_templates.route('/')
 def events():
     events = event_service.get_all_events()
-    if request.cookies.get('access_token'):
-        return render_template('events_protected.html', events=events)
+    token = request.cookies.get('access_token')  # Obtén el token de las cookies
+    user = verificar_token_directo(token)  # Decodifica el token
+    if user:  # Si el token es válido
+        return render_template('events_protected.html', events=events, user=user)
     else:
         return render_template('events.html', events= events)
     
@@ -83,9 +85,9 @@ def event_detail_query():
     event = event_service.get_event(event_id)
     if not event:
         return "Evento no encontrado", 404
-
-    # Determinar la plantilla según si hay un token en las cookies
-    if request.cookies.get('access_token'):
-        return render_template('event_detail_protected.html', event=event)
+    token = request.cookies.get('access_token')  # Obtén el token de las cookies
+    user = verificar_token_directo(token)  # Decodifica el token
+    if user:  # Si el token es válido
+        return render_template('event_detail_protected.html', event=event, user=user)
     else:
         return render_template('event_detail.html', event=event)

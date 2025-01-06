@@ -88,9 +88,18 @@ header h1 {
 
 .menu-toggle span {
     font-size: 1.5rem;
-    padding-right: 1.5rem;
+    padding: 0.5rem 1rem; /* Añade relleno para que sea fácil de clicar */
+    margin-right: 10px;
+    cursor: pointer; /* Cambia el cursor al de una mano */
+    display: inline-block; /* Asegura que actúe como un elemento en línea con tamaño */
+    border-radius: 5px; /* Bordes redondeados */
+    transition: all 0.3s ease; /* Animación para cambios de estilo */
 }
-
+.menu-toggle span:hover {
+    background-color: #2E2E2E;
+    color: #83C5BE; /* Cambia el color del texto */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Añade una sombra para resaltar */
+}
 /* Hero */
 .hero {
     text-align: center;
@@ -249,4 +258,11 @@ body.dark-mode .card a{
 }
 body.dark-mode .card a:hover{
     color: #00545b;
+}
+#tittle{
+    flex: auto;
+    transform: translateX(10%);
+}
+#welcome{
+    padding:inherit;
 }

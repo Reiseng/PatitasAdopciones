@@ -22,14 +22,43 @@
                 <li><a href="{{ url_for('events_templates.events') }}">Eventos</a></li>
                 <li><a href="{{url_for('nosotros')}}">Sobre Nosotros</a></li>
                 <li><a href="{{url_for('contact')}}">Contacto</a></li>
-                <li><a href="{{url_for('donations')}}">Donar</a></li>
+                <li><a href="{{url_for('donations')}}">Donaciones</a></li>
                 <li><a href="{{ url_for('login') }}">Login</a></li>
             </ul>
         </nav>
     </header>    
     <main>
-        <h1 color="red">PAGINA DE DONACIONES</h1>
-        <h2 color="red">DATOS POR RELLENAR</h2>
+        <div class="content" style="display: flex;
+            flex-flow: column;
+            padding-left: 5rem;
+            align-items: stretch;
+            padding-right: 5rem;">
+            <h1 style="color: red; text-align: center;">DONACIONES</h1>
+            <h3 style="text-align: center;">¡Ayúdanos a salvar más vidas!</h2>
+            <p style="text-align:start;margin-left: 1rem; margin-right: 1rem;">
+                Cada donación, por pequeña que sea, marca una gran diferencia en la vida de los animales que rescatamos. 
+                Tu apoyo nos permite proporcionar alimento, atención médica, refugio y mucho amor a los animales en situación de calle que tanto lo necesitan.
+                </p>
+            <h3 style="text-align: center;">¿Cómo puedes ayudar?</h3>
+            <p style="text-align:start;margin-left: 1rem; margin-right: 1rem;">
+                Donaciones económicas: Puedes contribuir directamente para cubrir gastos de tratamientos veterinarios, vacunas, desparasitaciones, esterilizaciones y más.
+            </p>
+            <div style="text-align:start;margin-left: 1rem; margin-right: 1rem;">
+                <li>Transferencias bancarias: (Cuenta XXXX)</li>
+                <li>MercadoPago: 
+                    <li style="padding-left: 6rem;">CVU: (CVU XXXX)</li>
+                    <li style="padding-left: 6rem;">Alias: (Alias XXXX)</li>
+                </li>
+            </div>
+            <h3 style="text-align: center;">¿Por qué donar?</h3>
+            <p style="text-align:start;margin-left: 1rem; margin-right: 1rem;">
+                Tu contribución es esencial para que sigamos cumpliendo nuestra misión. Sin el apoyo de personas como tú, sería imposible brindarles una segunda oportunidad a estos animales.
+            </p>
+            <h4 style="text-align: center;">¡Sé parte del cambio y ayúdanos a transformar vidas!</h4>
+            <p style="text-align:start;margin-left: 1rem; margin-right: 1rem;">
+                Para más información sobre cómo donar o colaborar, contáctanos a través de nuestras redes sociales o nuestro correo electrónico: [tuemail@ejemplo.com].
+            </p>
+        </div>
     <section class="section" id="eventos">
         <h3>Quiza te interese</h3>
         <div class="cards" id="eventos-cards">

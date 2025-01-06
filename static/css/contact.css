@@ -1,0 +1,10 @@
+.contact-info {
+    display: flex;
+    align-items: baseline;
+    text-align: start;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    flex-direction: column;
+    align-content: center;
+    flex-wrap: wrap;
+}

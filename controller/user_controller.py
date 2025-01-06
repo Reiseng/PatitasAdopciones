@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify, request
+from controller.userlogin import verificar_password_actual
 from controller.validator.user_validator import UserValidator
 from services.user_service import UserService
 
@@ -39,10 +40,11 @@ def update_user(user_id):
     name = data.get('name')
     email = data.get('email')
     password = data.get('password')
+    new_password = data.get('new_password')
     rank = data.get('rank')
     try:
-        UserValidator.validate_update_user_data(name, email, password, rank)
-        user = user_service.update_user(user_id, name, email, password, rank)
+        UserValidator.validate_update_user_data(name, email, password, new_password, rank)
+        user = user_service.update_user(user_id, name, email, new_password, rank)
         return jsonify({'message': 'User updated successfully', 'user': user})
     except ValueError as e:
         return jsonify({'message': str(e)}), 400

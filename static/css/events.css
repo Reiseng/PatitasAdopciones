@@ -7,8 +7,6 @@ main{
     flex-direction: column;
 }
 .event-container {
-    display: flex;
-    flex-direction: column;
     padding: 20px;
   }
 #event-tittle{

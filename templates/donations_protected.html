@@ -13,42 +13,55 @@
             <button id="DarkMode" class="mode-toggle">
                 <i id="modeIcon" class="fas fa-sun"></i> <!-- Icono de sol por defecto -->
             </button>
-            <h1>Patitas Adopciones</h1>
+            <h1 id="tittle">Patitas Adopciones</h1>
+            <p id="welcome">{{ user.name }}</p>
             <span>☰</span>
         </div>
         <nav>
             <ul class="menu">
                 <li><a href="{{ url_for('index') }}">Inicio</a></li>
+                <li><a href="{{url_for('panel_template.Panel')}}">Panel</a></li>
                 <li><a href="{{ url_for('events_templates.events') }}">Eventos</a></li>
                 <li><a href="{{url_for('nosotros')}}">Sobre Nosotros</a></li>
                 <li><a href="{{url_for('contact')}}">Contacto</a></li>
                 <li><a href="{{url_for('donations')}}">Donaciones</a></li>
-                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('logout') }}">Salir</a></li>
             </ul>
         </nav>
-    </header>     
+    </header>
     <main>
         <div class="content" style="display: flex;
             flex-flow: column;
             padding-left: 5rem;
             align-items: stretch;
             padding-right: 5rem;">
-            <h1 style="color: red; text-align: center;">SOBRE NOSOTROS</h1>
+            <h1 style="color: red; text-align: center;">DONACIONES</h1>
+            <h3 style="text-align: center;">¡Ayúdanos a salvar más vidas!</h2>
             <p style="text-align:start;margin-left: 1rem; margin-right: 1rem;">
-                Somos un grupo de cuatro personas apasionadas por el bienestar animal. Nos dedicamos a rescatar y brindar ayuda a animales que se encuentran en situación de calle,
-                 ofreciéndoles una segunda oportunidad para vivir una vida digna y llena de amor.
+                Cada donación, por pequeña que sea, marca una gran diferencia en la vida de los animales que rescatamos. 
+                Tu apoyo nos permite proporcionar alimento, atención médica, refugio y mucho amor a los animales en situación de calle que tanto lo necesitan.
                 </p>
+            <h3 style="text-align: center;">¿Cómo puedes ayudar?</h3>
             <p style="text-align:start;margin-left: 1rem; margin-right: 1rem;">
-                Cada animal rescatado es llevado a un lugar de transito, donde recibe cuidados integrales, incluyendo alimentación, atención médica, y el cariño necesario para superar cualquier trauma que hayan sufrido. 
-                Nos aseguramos de tratarlos hasta que se encuentren completamente recuperados, tanto física como emocionalmente, y en condiciones óptimas para ser adoptados.
+                Donaciones económicas: Puedes contribuir directamente para cubrir gastos de tratamientos veterinarios, vacunas, desparasitaciones, esterilizaciones y más.
             </p>
+            <div style="text-align:start;margin-left: 1rem; margin-right: 1rem;">
+                <li>Transferencias bancarias: (Cuenta XXXX)</li>
+                <li>MercadoPago: 
+                    <li style="padding-left: 6rem;">CVU: (CVU XXXX)</li>
+                    <li style="padding-left: 6rem;">Alias: (Alias XXXX)</li>
+                </li>
+            </div>
+            <h3 style="text-align: center;">¿Por qué donar?</h3>
             <p style="text-align:start;margin-left: 1rem; margin-right: 1rem;">
-                Nuestra misión es encontrar hogares amorosos para estos animales, donde puedan recibir el amor y cuidado que necesitan. Creemos firmemente en la importancia de la adopción responsable y en la necesidad de promover la tenencia responsable de mascotas. 
-                Trabajamos arduamente para crear conciencia sobre la importancia de la adopción y la tenencia responsable, y estamos comprometidos a seguir rescatando y ayudando a los animales en necesidad.
+                Tu contribución es esencial para que sigamos cumpliendo nuestra misión. Sin el apoyo de personas como tú, sería imposible brindarles una segunda oportunidad a estos animales.
             </p>
-
+            <h4 style="text-align: center;">¡Sé parte del cambio y ayúdanos a transformar vidas!</h4>
+            <p style="text-align:start;margin-left: 1rem; margin-right: 1rem;">
+                Para más información sobre cómo donar o colaborar, contáctanos a través de nuestras redes sociales o nuestro correo electrónico: [tuemail@ejemplo.com].
+            </p>
         </div>
-        <section class="section" id="eventos">
+    <section class="section" id="eventos">
         <h3>Quiza te interese</h3>
         <div class="cards" id="eventos-cards">
             <!-- Aquí se inyectarán las tarjetas dinámicamente -->

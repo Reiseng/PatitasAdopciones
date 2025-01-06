@@ -14,7 +14,8 @@
             <button id="DarkMode" class="mode-toggle">
                 <i id="modeIcon" class="fas fa-sun"></i> <!-- Icono de sol por defecto -->
             </button>
-            <h1>Patitas Adopciones</h1>
+            <h1 id="tittle">Patitas Adopciones</h1>
+            <p id="welcome">{{ user.name }}</p>
             <span>☰</span>
         </div>
         <nav>
@@ -24,7 +25,7 @@
                 <li><a href="{{ url_for('events_templates.events') }}">Eventos</a></li>
                 <li><a href="{{url_for('nosotros')}}">Sobre Nosotros</a></li>
                 <li><a href="{{url_for('contact')}}">Contacto</a></li>
-                <li><a href="{{url_for('donations')}}">Donar</a></li>
+                <li><a href="{{url_for('donations')}}">Donaciones</a></li>
                 <li><a href="{{ url_for('logout') }}">Salir</a></li>
             </ul>
         </nav>
@@ -33,8 +34,8 @@
         <section class = "event-container">
             <h2 id ="event-tittle">{{ event.name }}</h2>  <!-- Nombre del evento -->
             <p id="event-date">Fecha: {{ event.date }}</p>  <!-- Formato de la fecha -->
-            <p id="event-description">{{ event.description | safe }}</p>  <!-- Descripción -->
-            <p id="event-content">{{ event.content | safe }}</p>  <!-- Contenido -->
+            <p id="event-description">{{ event.description }}</p>  <!-- Descripción -->
+            <div id="event-content">{{ event.content | safe }}</div>
         </section>
         <section class="section" id="eventos">
             <h3>Otros eventos</h3>

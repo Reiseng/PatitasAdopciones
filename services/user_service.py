@@ -22,7 +22,6 @@ class UserService:
         return self.user_repository.get_all_users()
 
     def update_user(self, user_id, name=None, email=None, password=None, rank=None):
-        print(user_id)
         user = self.user_repository.update_user(user_id, name, email, password, rank)
         print(user)
         if not user:

@@ -27,7 +27,7 @@ def authenticate():
 
     # Validar usuario en la base de datos
     cursor, connection = abrir_conexion()
-    cursor.execute("SELECT id, password, rank FROM users WHERE email = %s", (mail,))
+    cursor.execute("SELECT id, password, rank, name FROM users WHERE email = %s", (mail,))
     user = cursor.fetchone()
     cerrar_conexion(cursor, connection)
 
@@ -37,6 +37,7 @@ def authenticate():
             # Crear token
             payload = {
                 'id': user[0],
+                'name': user[3],
                 'rank': user[2],
                 'exp': datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=2),
             }
@@ -70,6 +71,15 @@ def verificar_token(f):
             return response
         return f(*args, **kwargs)
     return decorator
+
+def verificar_token_directo(token):
+    try:
+        decoded_token = jwt.decode(token, SECRET_KEY, algorithms="HS256")
+        return decoded_token  # Si es válido, devuelve el contenido del token
+    except jwt.ExpiredSignatureError:
+        return None  # Token expirado
+    except jwt.InvalidTokenError:
+        return None  # Token inválido
 
 def verificar_password_actual(id_user, password_actual):
     cursor, connection = abrir_conexion()

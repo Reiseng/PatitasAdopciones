@@ -25,7 +25,7 @@ class UserValidator:
             raise ValueError("Password must contain at least one special character.")
 
     @staticmethod
-    def validate_update_user_data(name, email, password, rank):
+    def validate_update_user_data(name, email, password, new_password, rank):
         # Validar que al menos un campo esté presente para la actualización
         if not name and not email and not password and not rank:
             raise ValueError("At least one field (name, email, password, or rank) must be provided to update the user.")
@@ -48,6 +48,19 @@ class UserValidator:
                 raise ValueError("Password must contain at least one lowercase letter.")
             if not any(char in "!@#$%^&*()_+-=[]{}|;:,.<>?`~" for char in password):
                 raise ValueError("Password must contain at least one special character.")
+        if new_password:
+            if new_password == password:
+                raise ValueError("New password must be different from the current password.")
+            if len(new_password) < 8:
+                raise ValueError("New password must be at least 8 characters long.")
+            if not any(char.isdigit() for char in new_password):
+                raise ValueError("New password must contain at least one digit.")
+            if not any(char.isupper() for char in new_password):
+                raise ValueError("New password must contain at least one uppercase letter.")
+            if not any(char.islower() for char in new_password):
+                raise ValueError("New password must contain at least one lowercase letter.")
+            if not any(char in "!@#$%^&*()_+-=[]{}|;:,.<>?`~" for char in new_password):
+                raise ValueError("New password must contain at least one special character.")
 
         # Validar el rango si se proporciona uno nuevo
         if rank:

@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const data = Object.fromEntries(formData.entries()); // Convierte formData en objeto
 
             try {
-                const response = await fetch('/auth', {
+                const response = await fetch('/api/auth', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
