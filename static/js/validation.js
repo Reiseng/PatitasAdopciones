@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log('ID Usuario:', userIdElement.value);
     }
 
-    const form = document.getElementById('edit-user-form');
+    const form = document.getElementById('form');
     if (form) {
         console.log('Formulario encontrado');
         form.addEventListener('submit', async function (event) {
@@ -51,44 +51,45 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-    document.getElementById("edit-user-form").addEventListener("input", function(event) {
+    document.getElementById("form").addEventListener("input", function(event) {
         const currentPassword = document.getElementById("current_password").value;
         const newPassword = document.getElementById("new_password").value;
         const repeatPassword = document.getElementById("repeat_password").value;
-        const errorPassword = document.getElementById("error-password");
         const errorMessage = document.getElementById("error-message");
+        const errorPasswordMessage = document.getElementById("error-password-message");
         
         let isValid = true;
 
         // Verificar que la contraseña actual no esté vacía
         if (!currentPassword) {
-            event.preventDefault();
-            errorMessage.style.display = "block";
-            errorMessage.textContent = "La contraseña actual es obligatoria.";
-            isValid = false;
-        } else {
-            errorMessage.style.display = "none";
-        }
-        if (newPassword !== repeatPassword) {
-            event.preventDefault();
-            errorPassword.style.display = "block";
-            isValid = false;
-        } else {
-            if (newPassword.length < 8){
                 event.preventDefault();
-                errorPassword.style.display = "block";
-                errorPassword.textContent = "La contraseña debe tener al menos 8 caracteres.";
+                errorPasswordMessage.style.display = "block";
+                errorPasswordMessage.textContent = "La contraseña actual es obligatoria.";
                 isValid = false;
-                } else {
-                    errorPassword.style.display = "none";
-                    errorPassword.textContent = "Las contraraseñas no coinciden.";
+            } else {
+                errorPasswordMessage.style.display = "none";
+            }
+            if (newPassword || repeatPassword){
+            if (newPassword !== repeatPassword) {
+                event.preventDefault();
+                errorMessage.style.display = "block";
+                isValid = false;
+            } else {
+                if (newPassword.length < 8){
+                    event.preventDefault();
+                    errorMessage.style.display = "block";
+                    errorMessage.textContent = "La contraseña debe tener al menos 8 caracteres.";
+                    isValid = false;
+                    } else {
+                        errorMessage.style.display = "none";
+                        errorMessage.textContent = "Las contraraseñas no coinciden.";
+                }
             }
         }
 
         // Si todo es válido, permite el envío
         if (isValid) {
             errorMessage.style.display = "none";
-            errorPassword.style.display = "none";
         }
     });
 

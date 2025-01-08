@@ -6,6 +6,7 @@
     <title>Patitas Adopciones</title>  
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/panel.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -39,28 +40,38 @@
                     <p>Correo actual: {{ user.email }}</p>
                     <p>Rango actual: {{ user.rank}}</p>
                 </section>
-                <form id="edit-user-form" action="{{ url_for('user.update_user', user_id=user.id) }}" method="POST">
-                    <div>
+                <form id="form" action="{{ url_for('user.update_user', user_id=user.id) }}" method="POST">
+                    <div class="hidden-fields">
                     <input type="hidden" name="_method" value="PUT"> <!-- Simulación de PUT -->
                     <input type="hidden" id="user-id" value="{{user.id}}">
-                    
+                    </div>
+                    <div class="name-container">
                     <p>Nombre:</p>
                     <input type="text" name="name" placeholder="Nuevo nombre">
-                    
+                    </div>
+                    <div class="email-container">
                     <p>E-Mail:</p>
                     <input type="email" name="email" placeholder="Nuevo correo">
-                    
+                    </div>
+                    <div class="password-container">
                     <p>Contraseña actual:</p>
-                    <input type="password" id="current_password" name="password" placeholder="Contraseña Actual">                    
+                    <input type="password" id="current_password" name="password" placeholder="Contraseña Actual">
+                    <label class="error-password-message" id="error-password-message" style="display: none; color: red;">La contraseña actual es obligatoria.</label>
+                    </div>
+
+                    <div class="new-password-container">
                     <p>Nueva contraseña:</p>
                     <input type="password" id="new_password" name="new_password" placeholder="Nueva contraseña">
-                    
+                    </div>
+                    <div class="repeat-password-container">
                     <p>Repetir contraseña:</p>
                     <input type="password" id="repeat_password" name="repeat_password" placeholder="Repetir contraseña">
-                    <label class="error-message" id="error-message" style="display: none; color: red;">Contraseña incorrecta</label>
-                    <label class="error-password" id="error-password" style="display: none; color: red;">Las contraseñas no coinciden</label>
-                </div>
-                    <button type="submit">Guardar cambios</button>
+                    <label class="error-message" id="error-message" style="display: none; color: red;">Las contraraseñas no coinciden.</label>
+                    </div>
+                    <div class="buttons-container">
+                        <button type="submit">Guardar cambios</button>
+                    </div>
+
                 </form>
             </div>
         </main>
