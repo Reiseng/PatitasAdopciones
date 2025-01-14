@@ -46,7 +46,7 @@ class UserPersistence:
     def get_all_users(self):
         cursor, connection = abrir_conexion()
         try:
-            cursor.execute("SELECT * FROM users")
+            cursor.execute("SELECT id, name, email, rank FROM users")
             columnas = [col[0] for col in cursor.description]  # Obtener nombres de columnas
             users = [dict(zip(columnas, user)) for user in cursor.fetchall()]  # Crear lista de diccionarios
             connection.commit()
